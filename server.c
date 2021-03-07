@@ -24,7 +24,7 @@ void doChat(int sockfd){
 		printf("From client: %s\t To client: ", buff);
 		bzero(buff, MAX);
 		n = 0;
-		while((buff[n++] = getchar()) != 'n');
+		while((buff[n++] = getchar()) != '\n');
 		
 		write(sockfd, buff, sizeof(buff));
 
