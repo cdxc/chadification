@@ -11,24 +11,25 @@
 #define SA struct sockaddr 
 
 void doChat(int sockfd){
-	int n;
-	char buff[MAX];
-	for(;;){
-		bzero(buff, sizeof(buff));
-		printf("Text: ");
-		n = 0;
-		while((buff[n++] = getchar()) != '\n');
+int n;
+char buff[MAX];
+for(;;){
+	bzero(buff, MAX);
+	read(sockfd, buff, sizeof(buff));
+	printf("%s\n", buff);
+	bzero(buff, MAX);
+	n = 0;
+	while((buff[n++] = getchar()) != '\n');
 
-		write(sockfd, buff, sizeof(buff));
-		bzero(buff, sizeof(buff));
-		read(sockfd, buff, sizeof(buff));
-		printf("Server: %s ", buff);
-		if((strncmp(buff, "exit", 4)) == 0){
-			printf("Exiting... \n");
-			break;
-		}	
+	write(sockfd, buff, sizeof(buff));
+
+	if(strncmp("exit", buff, 4) == 0){
+		printf("exit \n");
+		break;
+		}
 	}
 }
+
 
 int main(){ 
     int sockfd, connfd; 
