@@ -16,12 +16,9 @@ void doChat(int sockfd){
 	char buff[MAX];
 	int n;
 	for(;;){
-		bzero(buff, MAX) ;
-
-		/* read message, copy to buff */
+		bzero(buff, MAX);
 		read(sockfd, buff, sizeof(buff));
-		/*  */
-		printf("From client: %s\t To client: ", buff);
+		printf("%s\n", buff);
 		bzero(buff, MAX);
 		n = 0;
 		while((buff[n++] = getchar()) != '\n');
@@ -34,7 +31,6 @@ void doChat(int sockfd){
 		}
 	}
 }
-
 
 int main(){
 	int sockfd, connfd, len;
