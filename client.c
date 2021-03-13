@@ -14,15 +14,15 @@ void doChat(int sockfd){
 int n;
 char buff[MAX];
 for(;;){
-	bzero(buff, MAX);
-	read(sockfd, buff, sizeof(buff));
-	printf("%s\n", buff);
-	bzero(buff, MAX);
-	n = 0;
+	bzero(buff, sizeof(buff));
+	printf("> ", buff);
+	n=0;
 	while((buff[n++] = getchar()) != '\n');
-
+	
 	write(sockfd, buff, sizeof(buff));
-
+	bzero(buff, sizeof(buff));
+	read(sockfd, buff, sizeof(buff));
+	printf(">> %s ", buff);
 	if(strncmp("exit", buff, 4) == 0){
 		printf("exit \n");
 		break;
@@ -44,7 +44,7 @@ int main(){
     	bzero(&servaddr, sizeof(servaddr)); 
   
     	servaddr.sin_family = AF_INET; 
-    	servaddr.sin_addr.s_addr = inet_addr("192.168.1.117"); 
+    	servaddr.sin_addr.s_addr = inet_addr("192.168.1.24"); 
     	servaddr.sin_port = htons(PORT); 
   
     	if(connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0){ 
