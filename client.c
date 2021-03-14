@@ -17,12 +17,14 @@ for(;;){
 	bzero(buff, sizeof(buff));
 	printf("> ", buff);
 	n=0;
-	while((buff[n++] = getchar()) != '\n');
-	
+	while((buff[n++] = getchar()) != '\n'){;}
+
 	write(sockfd, buff, sizeof(buff));
 	bzero(buff, sizeof(buff));
-	read(sockfd, buff, sizeof(buff));
-	printf(">> %s ", buff);
+	if(sizeof(buff) == 0){
+		read(sockfd, buff, sizeof(buff));
+		printf(">> %s ", buff);
+	}
 	if(strncmp("exit", buff, 4) == 0){
 		printf("exit \n");
 		break;
